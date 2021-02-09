@@ -20,7 +20,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Syscodes\\collections\\": ""
+			"Syscodes\\Collections\\": ""
 		}
 	},
 	"minimum-stability": "dev",
