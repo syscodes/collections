@@ -21,7 +21,10 @@
 	"autoload": {
 		"psr-4": {
 			"Syscodes\\Collections\\": ""
-		}
+		},
+		"files": [
+            "helpers.php"
+        ]
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true
