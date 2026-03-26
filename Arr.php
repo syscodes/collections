@@ -23,12 +23,12 @@
 namespace Syscodes\Components\Support;
 
 use ArrayAccess;
-use Traversable;
-use JsonSerializable;
 use InvalidArgumentException;
+use JsonSerializable;
 use Syscodes\Components\Contracts\Collection\Enumerable;
 use Syscodes\Components\Contracts\Support\Arrayable;
 use Syscodes\Components\Contracts\Support\Jsonable;
+use Traversable;
 
 /**
  * Gets all a given array for return dot-notated key from an array.
@@ -391,107 +391,114 @@ class Arr
 		
 		return true;
 	}
-
+	
 	/**
-     * Determine if all keys exist in an array using "dot" notation.
-     *
-     * @param  \ArrayAccess|array  $array
-     * @param  string|array  $keys
-     * @return bool
-     */
-    public static function hasAll($array, $keys)
-    {
-        $keys = (array) $keys;
-
-        if (! $array || $keys === []) {
-            return false;
-        }
-
-        foreach ($keys as $key) {
-            if (! static::has($array, $key)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Determine if any of the keys exist in an array using "dot" notation.
-     *
-     * @param  \ArrayAccess|array  $array
-     * @param  string|array  $keys
+	 * Determine if all keys exist in an array using "dot" notation.
 	 * 
-     * @return bool
-     */
-    public static function hasAny($array, $keys): bool
-    {
-        if (is_null($keys)) {
-            return false;
-        }
-
-        $keys = (array) $keys;
-
-        if (! $array) {
-            return false;
-        }
-
-        if ($keys === []) {
-            return false;
-        }
-
-        foreach ($keys as $key) {
-            if (static::has($array, $key)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Determine if all items pass the given truth test.
-     *
-     * @param  iterable  $array
-     * @param  (callable(mixed, array-key): bool)  $callback
+	 * @param  \ArrayAccess|array  $array
+	 * @param  string|array  $keys
 	 * 
-     * @return bool
-     */
-    public static function every($array, callable $callback): bool
-    {
-        return array_all($array, $callback);
-    }
-
-    /**
-     * Determine if some items pass the given truth test.
-     *
-     * @param  iterable  $array
-     * @param  (callable(mixed, array-key): bool)  $callback
+	 * @return bool
+	 */
+	public static function hasAll($array, $keys): bool
+	{
+		$keys = (array) $keys;
+		
+		if ( ! $array || $keys === []) {
+			return false;
+		}
+		
+		foreach ($keys as $key) {
+			if ( ! static::has($array, $key)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Determine if any of the keys exist in an array using "dot" notation.
 	 * 
-     * @return bool
-     */
-    public static function some($array, callable $callback): bool
-    {
-        return array_any($array, $callback);
-    }
-
-    /**
-     * Get an integer item from an array using "dot" notation.
-     *
-     * @throws \InvalidArgumentException
-     */
-    public static function integer(ArrayAccess|array $array, string|int|null $key, ?int $default = null): int
-    {
-        $value = Arr::get($array, $key, $default);
-
-        if ( ! is_int($value)) {
-            throw new InvalidArgumentException(
-                sprintf('Array value for key [%s] must be an integer, %s found.', $key, gettype($value))
-            );
-        }
-
-        return $value;
-    }
+	 * @param  \ArrayAccess|array  $array
+	 * @param  string|array  $keys
+	 * 
+	 * @return bool
+	 */
+	public static function hasAny($array, $keys): bool
+	{
+		if (is_null($keys)) {
+			return false;
+		}
+		
+		$keys = (array) $keys;
+		
+		if ( ! $array) {
+			return false;
+		}
+		
+		if ($keys === []) {
+			return false;
+		}
+		
+		foreach ($keys as $key) {
+			if (static::has($array, $key)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Determine if all items pass the given truth test.
+	 * 
+	 * @param  iterable  $array
+	 * @param  \callable  $callback
+	 * 
+	 * @return bool
+	 */
+	public static function every($array, callable $callback): bool
+	{
+		return array_all($array, $callback);
+	}
+	
+	/**
+	 * Determine if some items pass the given truth test.
+	 * 
+	 * @param  iterable  $array
+	 * @param  \callable  $callback
+	 * 
+	 * @return bool
+	 */
+	public static function some($array, callable $callback): bool
+	{
+		return array_any($array, $callback);
+	}
+	
+	/**
+	 * Get an integer item from an array using "dot" notation.
+	 * 
+	 * @param  \ArrayAccess|array  $array
+	 * @param  string|int|null  $key
+	 * @param  int|null  $default
+	 * 
+	 * @return
+	 * 
+	 * @throws \InvalidArgumentException
+	 */
+	public static function integer(ArrayAccess|array $array, string|int|null $key, ?int $default = null): int
+	{
+		$value = Arr::get($array, $key, $default);
+		
+		if ( ! is_int($value)) {
+			throw new InvalidArgumentException(
+				sprintf('Array value for key [%s] must be an integer, %s found.', $key, gettype($value))
+			);
+		}
+		
+		return $value;
+	}
 
 	/**
 	 * Gets max width of an array.
@@ -515,34 +522,30 @@ class Arr
 		
 		return $maxWidth;
 	}
-
+	
 	/**
-     * Determines if an array is associative.
-     *
-     * An array is "associative" if it doesn't have sequential numerical keys beginning with zero.
-     *
-     * @param  array  $array
+	 * Determines if an array is associative.
 	 * 
-     * @return ($array is list ? false : true)
-     */
-    public static function isAssoc(array $array)
-    {
-        return ! array_is_list($array);
-    }
-
-    /**
-     * Determines if an array is a list.
-     *
-     * An array is a "list" if all array keys are sequential integers starting from 0 with no gaps in between.
-     *
-     * @param  array  $array
+	 * @param  array  $array
 	 * 
-     * @return ($array is list ? true : false)
-     */
-    public static function isList($array)
-    {
-        return array_is_list($array);
-    }
+	 * @return bool
+	 */
+	public static function isAssoc(array $array): bool
+	{
+		return ! array_is_list($array);
+	}
+	
+	/**
+	 * Determines if an array is a list.
+	 * 
+	 * @param  array  $array
+	 * 
+	 * @return bool
+	 */
+	public static function isList($array): bool
+	{
+		return array_is_list($array);
+	}
 	
 	/**
 	 * Run a map over each of the items in the array.
